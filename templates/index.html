@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Index
+{% endblock %}
+
+{% block main %}
+
+    <h2>Your Portfolio</h2>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Shares</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transactions in folio %}
+                <tr>
+                    <td>{{ transactions.symbol }}</td>
+                    <td>{{ transactions.stock_name }} </td>
+                    <td>{{ transactions.sum_shares }} </td>
+                    <td>{{ usd(lookup(transactions.symbol)["price"]) }} </td>
+                    <td>{{ usd(transactions.sum_shares * lookup(transactions.symbol)["price"]) }} </td>
+                </tr>
+            {% endfor %}
+                <tr>
+                    <td>CASH</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td>{{ usd(usercash) }}</td>
+                </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td> {{ usd(total) }}</td>
+            </tr>
+        </tfoot>
+    </table>
+
+{% endblock %}
